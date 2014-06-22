@@ -26,8 +26,8 @@ function checkTwitch(){
                type: "GET",
                url: "https://api.twitch.tv/kraken/streams/" + channel,
                dataType: "jsonp",
+               async: true,
                cache: false,
-               async: false,
                success: function( data ){
                if (data.stream != null && onLivestream){ switchDelay = 6; setTwitch(); }
                if (data.stream == null && onTwitch){ switchDelay = 6; setLivestream(); }
@@ -47,7 +47,7 @@ function checkHitbox(){
                type: "GET",
                url: "http://api.hitbox.tv/media",
                dataType: "json",
-               async: false,
+               async: true,
                cache: false,
                success: function( data ){
                var live = false;
