@@ -3,9 +3,10 @@ var checkInterval = 5000;
 var lookupEnabled = false;
 var enabledColor = "#0c3";
 var disabledColor = "#f33";
-var onLivestream = true;
+var onAutoplay = true;
 var onTwitch = false;
 var onHitbox = false;
+var onVacker = false;
 
 function init(){
     if(typeof(Storage)!=="undefined" && localStorage.lookupEnabled != null) lookupEnabled = (localStorage.lookupEnabled != "true");
@@ -15,29 +16,8 @@ function init(){
 }
 
 function checkLive(){
-    checkTwitch();
-    checkHitbox();
-}
-
-function checkTwitch(){
-    if(lookupEnabled){
-        var switchDelay = 1;
-        $.ajax({
-               type: "GET",
-               url: "https://api.twitch.tv/kraken/streams/" + channel,
-               dataType: "jsonp",
-               async: true,
-               cache: false,
-               success: function( data ){
-               if (data.stream != null && onLivestream){ switchDelay = 6; setTwitch(); }
-               if (data.stream == null && onTwitch){ switchDelay = 6; setLivestream(); }
-               setTimeout(checkTwitch, switchDelay * checkInterval);
-               },
-               error: function(){
-               setTimeout(checkTwitch, switchDelay * checkInterval);
-               }
-               })
-    }
+  checkHitbox();
+	checkVacker();
 }
 
 function checkHitbox(){
@@ -45,17 +25,17 @@ function checkHitbox(){
         var switchDelay = 1;
         $.ajax({
                type: "GET",
-               url: "http://api.hitbox.tv/media",
+               url: "http://vacker.tv/json.php",
                dataType: "json",
                async: true,
                cache: false,
                success: function( data ){
                var live = false;
-               for ( stream in data.livestream ) {
-               if ( data.livestream[stream].channel.user_name == "dopefish" ){ live = true; }
-               }
-               if ( live && onLivestream ){ switchDelay = 6; setHitbox(); }
-               if ( !live && onHitbox ){ switchDelay = 6; setLivestream(); }
+               
+               if ( data.restream.live == true ){ live = true; }
+               
+               if ( live && onAutoplay ){ switchDelay = 6; setHitbox(); }
+               if ( !live && onHitbox ){ switchDelay = 6; setAutoplay(); }
                setTimeout(checkHitbox, switchDelay * checkInterval);
                },
                error: function(error){
@@ -66,25 +46,62 @@ function checkHitbox(){
     }
 }
 
+function checkVacker(){
+    if(lookupEnabled){
+        var switchDelay = 1;
+        $.ajax({
+               type: "GET",
+               url: "http://vacker.tv/json.php",
+               dataType: "json",
+               async: true,
+               cache: false,
+               success: function( data ){
+               var live = false;
+               
+               if ( data.live.live == true ){ live = true; }
+               
+               if ( live && onAutoplay ){ switchDelay = 6; setVacker(); }
+               if ( !live && onVacker ){ switchDelay = 6; setAutoplay(); }
+               setTimeout(checkVacker, switchDelay * checkInterval);
+               },
+               error: function(error){
+               console.log("ERROR");
+               setTimeout(checkVacker, switchDelay * checkInterval);
+               }
+               })
+    }
+}
+
 function setHitbox(){
-    onLivestream = false;
+    onAutoplay = false;
     onTwitch = false;
     onHitbox = true;
+	onVacker = false;
     document.getElementById('player').src= "hitboxPlayer.html";
 }
 
 function setTwitch(){
-    onLivestream = false;
+    onAutoplay = false;
     onTwitch = true;
     onHitbox = false;
+	onVacker = false;
     document.getElementById('player').src= "twitchPlayer.html";
 }
 
-function setLivestream(){
-    onLivestream = true;
+function setAutoplay(){
+    onAutoplay = true;
     onTwitch = false;
     onHitbox = false;
-    document.getElementById('player').src= "livestreamPlayer.html";
+	onVacker = false;
+    document.getElementById('player').src= "autoplayPlayer.html";
+}
+
+function setVacker(){
+    onAutoplay = false;
+    onTwitch = false;
+    onHitbox = false;
+	onVacker = true;
+    document.getElementById('player').src= "vackerPlayer.html";
 }
 
 function toggleEnabled() {
