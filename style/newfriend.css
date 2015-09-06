@@ -1,0 +1,102 @@
+﻿
+body {
+	background-color:#060606;
+	margin:0px;
+	font-size:15px;
+	color:#c6c6c6;
+}
+
+
+#content {
+	width:800px;
+	margin:auto;
+	padding:70px 75px;
+	font-family: Calibri, Verdana, sans-serif;
+	border-width:0px 2px;
+	border-style:solid;
+	border-color:#3da73c;
+	background-color:#0e0e0e;
+}
+
+h1 {
+	height:40px;
+	line-height:40px;
+	padding-left:53px;
+	background-image:url(/images/newfriendlogo.png);
+	background-repeat:no-repeat;
+}
+
+
+
+#webchat {
+	position:relative;
+	margin:20px auto;
+}
+#webchat div {
+	position:absolute;
+}
+.line {
+	background-color:#3da73c;
+}
+
+#topicline {
+	width:40px;
+	height:2px;
+	top:35px;
+	left:480px;
+}
+#topic {
+	width:250px;
+	top:4px;
+	left:530px;
+}
+
+#modsrange {
+	height:305px;
+	width:2px;
+	top:50px;
+	left:470px;
+}
+#modsrangetop {
+	height:2px;
+	width:15px;
+	top:50px;
+	left:455px;
+}
+#modsrangebottom {
+	height:2px;
+	width:15px;
+	top:353px;
+	left:455px;
+}
+#modsline {
+	height:2px;
+	width:50px;
+	top:200px;
+	left:472px;
+}
+#mods {
+	width:200px;
+	top:180px;
+	left:530px;
+}
+
+
+#highlightline {
+	height:40px;
+	width:2px;
+	top:130px;
+	left:80px;
+}
+#highlight {
+	width:300px;
+	top:170px;
+	left:20px;
+	color:#444;
+}
+
+
+code {
+	color:#999;
+}
+

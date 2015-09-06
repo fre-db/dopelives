@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'CG';
+    src: url('GOTHIC.TTF'),
+		url('GOTHICB.TTF'),
+		url('GOTHICBI.TTF'),
+		url('GOTHICI.TTF');
+}
+
+body {
+	font-family: Century Gothic, CenturyGothic, AppleGothic, CG, sans-serif;
+	font-size: 16px;
+	color:#777;
+}
+input {
+	font-family: Century Gothic, CenturyGothic, AppleGothic, CG, sans-serif;
+	font-size: 14px;
+}
+
+a {
+	color: #3da73c;
+	transition: color 0.3s;
+	transition: background-color 0.3s;
+	transition: filter 0.3s;
+	-webkit-transition: -webkit-filter 0.3s;
+}
+a:link, a:visited {
+	text-decoration: none;
+}
+a:hover, a.active, a:active {
+	filter: brightness(1.6);
+	-webkit-filter: brightness(1.6);
+}
+
+h1, h2, h3 {
+	color:#3da73c;
+	text-align:left;
+	font-weight:normal;
+	cursor:default;
+	font-family: Century Gothic, CenturyGothic, AppleGothic, CG, sans-serif;
+}
+h1 {
+	font-size:28px;
+	margin-top:0px;
+	margin-bottom:10px;
+}
+h2 {
+	font-size:22px;
+	margin-top:100px;
+	margin-bottom:5px;
+}
+h3 {
+	font-size:18px;
+	margin-top:30px;
+	margin-bottom:3px;
+}
+h4 {
+	font-size:16px;
+	margin-top:20px;
+	margin-bottom:0px;
+}
+
+
+p {
+	margin-top:3px;
+	margin-bottom:10px;
+}
+ul, ol {
+	padding-left:30px;
+	margin-top:0px;
+	margin-bottom:10px;
+}
+li h4 {
+	margin-top:10px;
+}
+li p {
+	margin:0px;
+}
+
+
+
+.icontext16 {
+	padding-left:21px;
+	background-repeat:no-repeat;
+	background-position:left center;
+}
