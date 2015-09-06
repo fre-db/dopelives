@@ -71,6 +71,9 @@ function initPlayer(onReady) {
 	.on("setupError", function(error) {
 		if (error.message == "Error loading player: No playable sources found") {
 			$(".jw-title-primary").html('Could not load the player. Please make sure you have <a href="https://get.adobe.com/flashplayer/" target="_blank">Flash player</a> installed.');
+			$("#flash").click(function() {
+				window.location.href = "https://get.adobe.com/flashplayer/";
+			}).css("cursor", "pointer");
 		}
 	});
 };
