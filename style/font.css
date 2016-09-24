@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'CG';
-    src: url('GOTHIC.TTF'),
-		url('GOTHICB.TTF'),
-		url('GOTHICBI.TTF'),
-		url('GOTHICI.TTF');
+    src: url('font/GOTHIC.TTF'),
+		url('font/GOTHICB.TTF'),
+		url('font/GOTHICBI.TTF'),
+		url('font/GOTHICI.TTF');
 }
 
 body {
@@ -82,4 +82,8 @@ li p {
 	padding-left:21px;
 	background-repeat:no-repeat;
 	background-position:left center;
+}
+
+.fa-external-link::before {
+    line-height: 2.5em;
 }

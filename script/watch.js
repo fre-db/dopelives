@@ -5,7 +5,7 @@ var player;
 var infoPane;
 var hdButton;
 
-var playing = true;
+var playing = false;
 var hd;
 
 function initPlayer(onReady) {

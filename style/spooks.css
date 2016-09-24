@@ -1,0 +1,102 @@
+﻿
+/* layout.css */
+
+#header {
+	border-bottom-color:#c00;
+}
+
+#logo {
+	background-image:url(/images/spooks/logo.png);
+}
+
+#title_name {
+	color:#fff;
+}
+#title_slogan {
+	color:#c00;
+	margin-top:5px;
+}
+
+#chat {
+	background-color:#c00;
+}
+
+
+/* font.css */
+
+@font-face {
+    font-family: 'Spook';
+    src: url('font/spooks/Spook.woff2') format('woff2'),
+         url('font/spooks/Spook.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	font-family:Spook,Century Gothic,CenturyGothic,AppleGothic,CG,sans-serif;
+}
+
+#flash .jw-controlbar-center-group, #flash .jw-text-elapsed {
+	font-family:Spook,Century Gothic,CenturyGothic,AppleGothic,CG,sans-serif;
+}
+
+#menu a {
+	filter:brightness(0) invert(1);
+	-webkit-filter:brightness(0) invert(1);
+}
+#menu a:hover, a.active, a:active {
+	filter:sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(80%);
+	-webkit-filter:sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(75%);
+}
+
+a {
+	color: #c00;
+}
+
+h1, h2, h3 {
+	color:#fff;
+}
+
+
+/* watch.css */
+
+#hd-led {
+	color:#c00;
+	font-size:9px;
+	line-height:32px;
+	position:absolute;
+	top:0px;
+	left:-2px;
+	
+	color:#c00;
+	text-shadow:0px 0px 7px #c00;
+}
+
+
+/* custom */
+
+#spoopyskeletons {
+	width:25%;
+	background-position:0 8px;
+	display:table-cell;
+}
+#spoopyskeletons img {
+	margin-top:8px;
+}
+
+.pumpkin {
+	width:0;
+	height:0;
+	background-image:url(/images/spooks/pumpkin.png);
+    background-size: 100% 100%;
+	pointer-events:none;
+	position:absolute;
+	z-index:1000;
+	opacity:0.6;
+}
+
+
+
+
+
+

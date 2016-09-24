@@ -64,6 +64,27 @@ body {
 	margin-left:15px;
 }
 
+#promo {
+	padding-top:30px;
+	padding-right:20px;
+	cursor:default;
+	display:table-cell;
+	vertical-align:top;
+	
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	user-select: none;
+	
+	height:20px;
+	line-height:20px;
+	font-size:20px;
+}
+#promo a {
+	display: inline-block;
+	text-align:center;
+}
+
 #menu {
 	width:400px;
 	padding-top:22px;

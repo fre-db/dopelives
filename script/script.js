@@ -17,6 +17,8 @@ var expandButton;
 var resizing;
 var prevWidth;
 
+var mainRgb = "61, 167, 60";
+
 $(function() {
 	windowFrame = $(window);
 	header = $("#header");
@@ -40,7 +42,7 @@ $(function() {
 				var opacity = Math.max(0, width - 50) / 100;
 				fadeElements.css("opacity", opacity);
 				header.css("height", Math.max(0, width) / 1.5);
-				chat.css("background-color", "rgba(61, 167, 60, " + opacity + ")");
+				chat.css("background-color", "rgba(" + mainRgb + ", " + opacity + ")");
 				
 				resizeWindow(true);
 				
@@ -142,7 +144,7 @@ function expandStream() {
 	
 	prevWidth = 0;
 	header.animate({ height: 0, opacity: 0 });
-	chat.animate({ width: 0, backgroundColor: "rgba(61, 167, 60, 0)" });
+	chat.animate({ width: 0, backgroundColor: "rgba(" + mainRgb + ", 0)" });
 	chatHandle.animate({ right: 0 });
 	chatClient.animate({ opacity: 0 }, {
 		progress: function() {
@@ -165,7 +167,7 @@ function shrinkStream() {
 	chat.removeClass("hidden");
 	
 	header.animate({ height: 100, opacity: 1 });
-	chat.animate({ width: originalChatWidth, backgroundColor: "rgba(61, 167, 60, 1)" });
+	chat.animate({ width: originalChatWidth, backgroundColor: "rgba(" + mainRgb + ", 1)" });
 	chatHandle.animate({ right: originalChatWidth });
 	chatClient.animate({ opacity: 1 }, {
 		progress: function() {
