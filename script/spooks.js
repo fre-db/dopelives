@@ -44,5 +44,5 @@ $(function() {
 	});
 	
 	var preload = new Image();
-	image.src = "/images/spooks/pumpkin.png";
+	preload.src = "/images/spooks/pumpkin.png";
 });

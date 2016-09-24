@@ -79,6 +79,11 @@ h1, h2, h3 {
 	width:25%;
 	background-position:0 8px;
 	display:table-cell;
+	
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
+	user-select: none;
 }
 #spoopyskeletons img {
 	margin-top:8px;
@@ -88,7 +93,7 @@ h1, h2, h3 {
 	width:0;
 	height:0;
 	background-image:url(/images/spooks/pumpkin.png);
-    background-size: 100% 100%;
+	background-size: 100% 100%;
 	pointer-events:none;
 	position:absolute;
 	z-index:1000;
