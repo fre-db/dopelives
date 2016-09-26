@@ -66,10 +66,10 @@ $spooks = (date('m') == 10);
 				<? } ?>
 				<div id="menu">
 					<a class="menubutton" href="/newfriend.html" target="_blank" style="background-image:url(/images/<?= ($spooks ? 'spooks/' : NULL) ?>newfriend.png);">Hello!</a><?
-					?><a class="menubutton" href="http://vacker.tv/ondemand" target="_blank" style="background-image:url(/images/vacker.png);">OnDemand</a><?
+					?><a class="menubutton" href="https://vacker.tv/ondemand" target="_blank" style="background-image:url(/images/vacker.png);">OnDemand</a><?
 					?><a class="menubutton" href="http://dopefish.freeforums.org/" target="_blank" style="background-image:url(/images/forums.png);">Forums</a><?
 					?><a class="menubutton" href="http://youtube.com/dopelives" target="_blank" style="background-image:url(/images/utubs.png);">YouTube</a><?
-					?><a class="menubutton" href="http://vacker.tv/donate" target="_blank" style="background-image:url(/images/donate.png);">Donate</a>
+					?><a class="menubutton" href="https://vacker.tv/donate" target="_blank" style="background-image:url(/images/donate.png);">Donate</a>
 				</div>
 			</div>
 		</div>
