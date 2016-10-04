@@ -112,7 +112,7 @@ function autoswitch() {
 			
 			if (data.live.live) {
 				channel = (hd ? "live" : "live_low");
-				server = (currentServer == "de" ? (data.live.viewers > 20 ? "nl" : "de") : currentServer);
+				server = (currentServer == "de" ? (data.live.viewers > 35 ? "nl" : "de") : currentServer);
 				if (hdButton && hdButton.hasClass("jw-hidden")) {
 					hdButton.removeClass("jw-hidden");
 				}

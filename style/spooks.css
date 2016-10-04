@@ -62,13 +62,6 @@ h1, h2, h3 {
 
 #hd-led {
 	color:#c00;
-	font-size:9px;
-	line-height:32px;
-	position:absolute;
-	top:0px;
-	left:-2px;
-	
-	color:#c00;
 	text-shadow:0px 0px 7px #c00;
 }
 

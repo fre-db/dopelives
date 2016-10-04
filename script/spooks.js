@@ -41,6 +41,9 @@ $(function() {
 				queue: false
 			});
 		}, pumpkinDuration - pumpkinFadeDuration);
+		
+		var woo = new Audio('/assets/woo.wav');
+		woo.play();
 	});
 	
 	var preload = new Image();
