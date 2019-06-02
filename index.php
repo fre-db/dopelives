@@ -67,7 +67,7 @@ $spooks = (date('m') == 10);
 				<div id="menu">
 					<a class="menubutton" href="/newfriend.html" target="_blank" style="background-image:url(/images/<?= ($spooks ? 'spooks/' : NULL) ?>newfriend.png);">Hello!</a><?
 					?><a class="menubutton" href="https://vacker.tv/ondemand" target="_blank" style="background-image:url(/images/vacker.png);">OnDemand</a><?
-					?><a class="menubutton" href="http://dopefish.freeforums.org/" target="_blank" style="background-image:url(/images/forums.png);">Forums</a><?
+					?><a class="menubutton" href="https://discord.gg/R7cazz8" target="_blank" style="background-image:url(/images/forums.png);">Discord</a><?
 					?><a class="menubutton" href="http://youtube.com/dopelives" target="_blank" style="background-image:url(/images/utubs.png);">YouTube</a><?
 					?><a class="menubutton" href="https://vacker.tv/donate" target="_blank" style="background-image:url(/images/donate.png);">Donate</a>
 				</div>
@@ -76,6 +76,22 @@ $spooks = (date('m') == 10);
 		<div id="content">
 			<div id="video">
 				<div id="flash"></div>
+				<iframe id="twitch"
+				    src=""
+				    height="100%"
+				    width="100%"
+				    frameborder="0"
+				    scrolling="no"
+				    allowfullscreen="true">
+				</iframe>
+				<iframe id="youtube" 
+					width="100%" 
+					height="100%" 
+					src="" 
+					frameborder="0" 
+					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+					allowfullscreen>
+				</iframe>
 			</div>
 			<div id="chat"<?= ($chatHidden ? ' class="hidden" style="width:0px; background-color:rgba(61, 167, 60, 0);"' : ' style="width:' . $chatSize . 'px;"') ?>>
 				<iframe src="http://webchat.quakenet.org/?channels=dopefish_lives&amp;uio=<?= ($spooks ? 'MTE9MA4c' : 'MTE9MTAz8d') ?>" class="fullContentHeight"></iframe>

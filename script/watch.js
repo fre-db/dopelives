@@ -12,6 +12,9 @@ function initPlayer(onReady) {
 	var hdCookieSetting = getCookie(hdCookie);
 	hd = (hdCookieSetting ? hdCookieSetting == "on" : true);
 
+    $("#twitch").hide();
+    $("#youtube").hide();
+
 	// Prepare JW player
 	player = jwplayer("flash");
 	player.setup({
@@ -97,56 +100,124 @@ var liveInfo;
 var servers = ["de", "nl", "us"];
 var targetServer = 0;
 function autoswitch() {
-	var currentServer = servers[targetServer];
-	$.ajax({
-		type: "GET",
-		url: "http://" + currentServer + ".vacker.tv/json.php",
-		dataType: "json",
-		success: function(data) {
-			targetServer = 0;
-			
-			var channel;
-			var server;
-			var width;
-			var height;
-			
-			if (data.live.live) {
-				channel = (hd ? "live" : "live_low");
-				server = (currentServer == "de" ? (data.live.viewers > 35 ? "nl" : "de") : currentServer);
-				if (hdButton && hdButton.hasClass("jw-hidden")) {
-					hdButton.removeClass("jw-hidden");
-				}
-				
-				$.getJSON("http://goalitium.kapsi.fi/dopelives_status3?callback=?", function(data) {
-					var info = data.split("\n");
-					if (info.length == 2) {
-						var gameInfo = info[1].split(": ");
-						liveInfo = "[" + info[0] + "] " + gameInfo[1];
-						updateInfoPane();
-					}
-				});
-				
-			} else {
-				channel = "autoplay";
-				server = "de";
-				if (hdButton && !hdButton.hasClass("jw-hidden")) {
-					hdButton.addClass("jw-hidden");
-				}
-				
-				$.getJSON("http://vacker.tv/apname?callback=?", function(data) {
-					autoplayInfo = data;
-					updateInfoPane();
-				});
-			}
-			
-			if (channel != currentChannel) {
-				setStream(server, channel);
-			}
-		},
-		error: function() {
-			targetServer = (targetServer + 1) % servers.length;
-		}
-	});
+    $.getJSON("http://goalitium.kapsi.fi/dopelives_status3?callback=?", function (data) {
+        data = "a Game: Apex Legends https://www.youtube.com/watch?v=dYONccu0PZ8"
+        var streamURL = "";
+        var service = "";
+        var urlIndex = -1;
+        if ((urlIndex = data.indexOf("twitch.tv")) > 0) {
+            var startURL = Math.max(0,
+                data.lastIndexOf(" ", urlIndex) + 1,
+                data.lastIndexOf("\n", urlIndex) + 1,
+                data.lastIndexOf("(", urlIndex) + 1
+            );
+            var endURL = Math.min(data.length,
+                data.indexOf(" ", urlIndex) == -1 ? data.length : data.indexOf(" ", urlIndex),
+                data.indexOf("\n", urlIndex) == -1 ? data.length : data.indexOf("\n", urlIndex),
+                data.indexOf(")", urlIndex) == -1 ? data.length : data.indexOf(")", urlIndex)
+            );
+
+            streamURL = data.substring(startURL, endURL);
+            service = "twitch";
+        } else if ((urlIndex = data.indexOf("youtube.com")) > 0 || (urlIndex = data.indexOf("youtu.be")) > 0) {
+            var startURL = Math.max(0,
+                data.lastIndexOf(" ", urlIndex) + 1,
+                data.lastIndexOf("\n", urlIndex) + 1,
+                data.lastIndexOf("(", urlIndex) + 1
+            );
+            var endURL = Math.min(data.length,
+                data.indexOf(" ", urlIndex) == -1 ? data.length : data.indexOf(" ", urlIndex),
+                data.indexOf("\n", urlIndex) == -1 ? data.length : data.indexOf("\n", urlIndex),
+                data.indexOf(")", urlIndex) == -1 ? data.length : data.indexOf(")", urlIndex)
+            );
+
+            streamURL = data.substring(startURL, endURL);
+            service = "youtube";
+        }
+
+        var info = data.split("\n");
+
+        if (streamURL.length > 0 && validURL(streamURL)) {
+            if(service == "twitch" && !$("#twitch").is(":visible")) {
+                $("#twitch").show();
+                $("#youtube").hide();
+                $("#youtube").attr("src", "");
+                $("#flash").hide();
+                
+                var urlParts = streamURL.split("/");
+                var channelName = urlParts[urlParts.length-1] == "" ? urlParts[urlParts.length-2] : urlParts[urlParts.length-1];
+
+                $("#twitch").attr("src","https://player.twitch.tv/?channel=" + channelName);
+            }
+            else if(service == "youtube" && !$("#youtube").is(":visible")) {
+                $("#twitch").hide();
+                $("#twitch").attr("src","");
+                $("#youtube").show();
+                $("#flash").hide();
+
+                var urlParts = streamURL.split("?v=");
+                var channelId = urlParts[urlParts.length - 1];
+
+                $("#youtube").attr("src", "https://www.youtube.com/embed/" + channelId + "?autoplay=1");
+            }
+        }
+        else {
+            
+            $("#twitch").hide();
+            $("#twitch").attr("src","");
+            $("#youtube").hide();
+            $("#youtube").attr("src", "");
+            $("#flash").show();
+
+            var currentServer = servers[targetServer];
+            $.ajax({
+                type: "GET",
+                url: "http://" + currentServer + ".vacker.tv/json.php",
+                dataType: "json",
+                success: function (data) {
+                    targetServer = 0;
+
+                    var channel;
+                    var server;
+                    var width;
+                    var height;
+
+                    if (data.live.live) {
+                        channel = (hd ? "live" : "live_low");
+                        server = (currentServer == "de" ? (data.live.viewers > 35 ? "nl" : "de") : currentServer);
+                        if (hdButton && hdButton.hasClass("jw-hidden")) {
+                            hdButton.removeClass("jw-hidden");
+                        }
+
+                        if (info.length == 2) {
+                            var gameInfo = info[1].split(": ");
+                            liveInfo = "[" + info[0] + "] " + gameInfo[1];
+                            updateInfoPane();
+                        }
+
+                    } else {
+                        channel = "autoplay";
+                        server = "de";
+                        if (hdButton && !hdButton.hasClass("jw-hidden")) {
+                            hdButton.addClass("jw-hidden");
+                        }
+
+                        $.getJSON("http://vacker.tv/apname?callback=?", function (data) {
+                            autoplayInfo = data;
+                            updateInfoPane();
+                        });
+                    }
+
+                    if (channel != currentChannel) {
+                        setStream(server, channel);
+                    }
+                },
+                error: function () {
+                    targetServer = (targetServer + 1) % servers.length;
+                }
+            });
+        }
+    });
 }
 function setStream(server, channel) {
 	currentChannel = channel;
@@ -197,4 +268,14 @@ function getCookie(name) {
 		}
     }
     return "";
+}
+
+function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+    return !!pattern.test(str);
 }
