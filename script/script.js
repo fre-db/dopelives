@@ -101,7 +101,7 @@ $(function() {
         controlBar.children(".jw-icon-fullscreen").before('<div class="jw-icon jw-icon-inline jw-button-color jw-reset fa fa-external-link"></div>');
         $(".fa-external-link").click(function() {
             player.pause();
-            window.open('/watch.php' + (hls ? '?hls' : ''),'popout','width=1280,height=720,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=1');
+            window.open('watch.php' + (hls ? '?hls' : ''),'popout','width=1280,height=720,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=1');
         });
         
         // Handle the expand/shrink button
@@ -186,11 +186,5 @@ function resizeWindow(manual) {
         return;
     }
 
-    var height = windowFrame.height() - header.outerHeight();
     fullContentHeights.height(windowFrame.height() - header.outerHeight());
-    if (hls) {
-        var jwAspect = $(".jw-aspect");
-        jwAspect.height(height);
-        jwAspect.css("paddingTop", "");
-    }
 }
