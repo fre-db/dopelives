@@ -1,5 +1,6 @@
 ﻿
 var hdCookie = "hd";
+var enableHdToggle = false;
 
 var player;
 var infoPane;
@@ -33,27 +34,29 @@ function initPlayer(onReady, sources) {
         updateInfoPane();
         
         // Handle the HD button
-        $(".jw-icon-hd").remove();
-        controlBar.prepend('<div class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-hd' + (currentChannel == "autoplay" ? " jw-hidden" : "") + '">\
-            <div id="hd-led" class="fa fa-circle"></div>\
-        </div>');
-        hdButton = $(".jw-icon-hd");
-        if (!hd) {
-            hdButton.addClass("jw-off");
-        }
-        hdButton.mouseenter(function() {
-            hdButton.addClass("jw-open");
-        });
-        hdButton.mouseleave(function() {
-            hdButton.removeClass("jw-open");
-        });
-        hdButton.click(function() {
-            if (hdButton.hasClass("jw-off")) {
-                enableHd();
-            } else {
-                disableHd();
+        if (enableHdToggle) {
+            $(".jw-icon-hd").remove();
+            controlBar.prepend('<div class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-hd' + (currentChannel == "autoplay" ? " jw-hidden" : "") + '">\
+                <div id="hd-led" class="fa fa-circle"></div>\
+            </div>');
+            hdButton = $(".jw-icon-hd");
+            if (!hd) {
+                hdButton.addClass("jw-off");
             }
-        });
+            hdButton.mouseenter(function() {
+                hdButton.addClass("jw-open");
+            });
+            hdButton.mouseleave(function() {
+                hdButton.removeClass("jw-open");
+            });
+            hdButton.click(function() {
+                if (hdButton.hasClass("jw-off")) {
+                    enableHd();
+                } else {
+                    disableHd();
+                }
+            });
+        }
         
         if (onReady) {
             onReady();
