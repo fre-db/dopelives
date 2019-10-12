@@ -9,6 +9,8 @@ if (isset($_COOKIE['chatsize'])) {
 
 $vackerPromo = false;
 $spooks = (date('m') == 10);
+
+$hls = isset($_GET['hls']);
 ?><!DOCTYPE html>
 <html>
 
@@ -29,8 +31,15 @@ $spooks = (date('m') == 10);
 		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		
-		<script src="http://content.jwplatform.com/libraries/<?= ($spooks ? '0LjSzsNc' : 'i2wbg4Bq') ?>.js"></script>
-		<script>jwplayer.key="b3eA3XrzNeYTKIscnX3RJQKfYGPDtXzXSoYDVw==";</script>
+		<? if ($hls) { ?>
+				<script src="http://content.jwplatform.com/libraries/<?= ($spooks ? '0LjSzsNc' : 'i2wbg4Bq') ?>.js"></script>
+		<? } else { ?>
+				<script src="http://ssl.p.jwpcdn.com/player/v/7.12.13/jwplayer.js"></script>
+		<? } ?>
+		<script>
+				jwplayer.key="b3eA3XrzNeYTKIscnX3RJQKfYGPDtXzXSoYDVw==";
+				var hls = <?= $hls ? 'true' : 'false' ?>;
+		</script>
 		
 		<script src="/script/functions.js"></script>
 		<script src="/script/watch.js"></script>
@@ -74,6 +83,7 @@ $spooks = (date('m') == 10);
 			</div>
 		</div>
 		<div id="content">
+			<div id="playerError"></div>
 			<div id="video">
 				<div id="flash"></div>
 			</div>

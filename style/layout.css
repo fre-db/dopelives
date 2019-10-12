@@ -110,6 +110,14 @@ body {
 	height:100%;
 	display:table;
 	table-layout: fixed;
+	position:relative;
+}
+
+#playerError {
+    position:absolute;
+    top:0;
+    margin:20px;
+    z-index:100;
 }
 
 
@@ -122,6 +130,9 @@ body {
 }
 #flash.jwplayer {
 	height:auto !important;
+}
+#flash.jwplayer .jw-aspect {
+  display:block;
 }
 
 
