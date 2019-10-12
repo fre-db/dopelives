@@ -32,11 +32,10 @@
     font-style: normal;
 }
 
-body {
-	font-family:Spook,Century Gothic,CenturyGothic,AppleGothic,CG,sans-serif;
-}
-
-#flash .jw-controlbar-center-group, #flash .jw-text-elapsed {
+body,
+#flash .jw-controlbar-center-group,
+#flash .jw-text-elapsed,
+#flash .jw-text-live {
 	font-family:Spook,Century Gothic,CenturyGothic,AppleGothic,CG,sans-serif;
 }
 

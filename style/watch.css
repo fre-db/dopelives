@@ -61,6 +61,9 @@ body {
 .fa {
 	font-family:FontAwesome !important;
 }
+.jw-button-container .fa-expand {
+    font-size:35px !important;
+}
 .fa-expand::before {
     content:"" !important;
 }
@@ -69,6 +72,18 @@ body {
 }
 .fa-external-link {
 	line-height:35px !important;
+}
+.jw-button-container .fa-external-link {
+    font-size:20px !important;
+}
+.jw-logo-button {
+    display:none !important;
+}
+.jw-text-live {
+    width:auto !important;
+}
+.jw-text-live::before {
+    display:none !important;
 }
 
 

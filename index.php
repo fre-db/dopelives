@@ -34,7 +34,7 @@ $hls = isset($_GET['hls']);
 		<? if ($hls) { ?>
 				<script src="http://content.jwplatform.com/libraries/<?= ($spooks ? '0LjSzsNc' : 'i2wbg4Bq') ?>.js"></script>
 		<? } else { ?>
-				<script src="http://ssl.p.jwpcdn.com/player/v/7.12.13/jwplayer.js"></script>
+				<script src="/script/jwplayer-7.12.13.js"></script>
 		<? } ?>
 		<script>
 				jwplayer.key="b3eA3XrzNeYTKIscnX3RJQKfYGPDtXzXSoYDVw==";

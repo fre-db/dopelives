@@ -4,11 +4,16 @@ var hdCookie = "hd";
 var player;
 var infoPane;
 var hdButton;
+var playerError;
+var jwOnReady;
 
 var playing = true;
 var hd;
 
-function initPlayer(onReady) {
+function initPlayer(onReady, sources) {
+    playerError = $("#playerError");
+    jwOnReady = onReady;
+    
     var hdCookieSetting = getCookie(hdCookie);
     hd = (hdCookieSetting ? hdCookieSetting == "on" : true);
 
@@ -16,6 +21,7 @@ function initPlayer(onReady) {
     player = jwplayer("flash");
     player.setup({
         file: getStreamUrl("de", "autoplay"),
+        sources: sources,
         width: "100%",
         height: "100%",
         stretching: "uniform"
@@ -23,7 +29,7 @@ function initPlayer(onReady) {
     .on("ready", function() {
         // Handle the stream info
         var controlBar = $(".jw-controlbar-right-group");
-        infoPane = $(".jw-controlbar-center-group");
+        infoPane = $(".jw-controlbar-center-group, .jw-text-live");
         updateInfoPane();
         
         // Handle the HD button
@@ -60,6 +66,7 @@ function initPlayer(onReady) {
         }, 5000);
     })
     .on("play", function() {
+        playerError.hide();
         playing = true;
     })
     .on("pause", function() {
@@ -81,7 +88,8 @@ function initPlayer(onReady) {
 };
 
 function displayPlayerError() {
-    $("#playerError").html('Could not start stream.' + (!hls ? ' Either ensure <a href="https://get.adobe.com/flashplayer/" target="_blank">Flash</a> is enabled or <a href="?hls">go to our HTML5 stream</a>.' : ''));
+    playerError.html('Could not start stream.' + (!hls ? ' Either ensure <a href="https://get.adobe.com/flashplayer/" target="_blank">Flash</a> is enabled or <a href="?hls">go to our HTML5 stream</a>.' : ''));
+    playerError.show();
     // Need a timeout because JW Player will try to set the error message after the error callback.
     setTimeout(function() {
         $(".jw-title-primary").html('');
@@ -174,12 +182,16 @@ function setStream(server, channel) {
         }
     }
     
-    player.load([{
-        sources: sources
-    }]);
-    
-    if (playing) {
-        player.play();
+    if (hls) {
+        // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
+        initPlayer(jwOnReady, sources);
+    } else {
+        player.load([{
+            sources: sources
+        }]);
+        if (playing) {
+            player.play();
+        }
     }
     
     updateInfoPane();

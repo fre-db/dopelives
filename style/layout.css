@@ -118,6 +118,7 @@ body {
     top:0;
     margin:20px;
     z-index:100;
+    display:none;
 }
 
 
@@ -132,7 +133,7 @@ body {
 	height:auto !important;
 }
 #flash.jwplayer .jw-aspect {
-  display:block;
+    display:block;
 }
 
 
