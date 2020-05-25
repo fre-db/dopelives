@@ -122,7 +122,7 @@ function autoswitch() {
     var currentServer = servers[targetServer];
     $.ajax({
         type: "GET",
-        url: "http://" + currentServer + ".vacker.tv/json.php",
+        url: "https://" + currentServer + ".vacker.tv/json.php",
         dataType: "json",
         success: function(data) {
             targetServer = 0;
@@ -139,7 +139,7 @@ function autoswitch() {
                     hdButton.removeClass("jw-hidden");
                 }
                 
-                $.getJSON("http://goalitium.kapsi.fi/dopelives_status3?callback=?", function(data) {
+                $.getJSON("https://goalitium.kapsi.fi/dopelives_status3?callback=?", function(data) {
                     var info = data.split("\n");
                     if (info.length == 2) {
                         var gameInfo = info[1].split(": ");
@@ -155,7 +155,7 @@ function autoswitch() {
                     hdButton.addClass("jw-hidden");
                 }
                 
-                $.getJSON("http://vacker.tv/apname?callback=?", function(data) {
+                $.getJSON("https://vacker.tv/apname?callback=?", function(data) {
                     autoplayInfo = data;
                     updateInfoPane();
                 });
