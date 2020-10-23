@@ -26,13 +26,13 @@ $hls = isset($_GET['hls']);
 			<link rel="stylesheet" type="text/css" href="style/spooks.css" />
 		<? } ?>
 
-		<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css" />
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		
 		<? if ($hls) { ?>
-				<script src="http://content.jwplatform.com/libraries/<?= ($spooks ? '0LjSzsNc' : 'i2wbg4Bq') ?>.js"></script>
+				<script src="https://content.jwplatform.com/libraries/<?= ($spooks ? '0LjSzsNc' : 'i2wbg4Bq') ?>.js"></script>
 		<? } else { ?>
 				<script src="script/jwplayer-7.12.13.js"></script>
 		<? } ?>
@@ -77,8 +77,8 @@ $hls = isset($_GET['hls']);
 					<a class="menubutton" href="newfriend.html" target="_blank" style="background-image:url(/images/<?= ($spooks ? 'spooks/' : NULL) ?>newfriend.png);">Hello!</a><?
 					?><a class="menubutton" href="https://vacker.tv/ondemand" target="_blank" style="background-image:url(/images/vacker.png);">OnDemand</a><?
 					?><a class="menubutton" href="https://discord.gg/R7cazz8" target="_blank" style="background-image:url(/images/discord.png);">Discord</a><?
-					?><a class="menubutton" href="http://dopefish.freeforums.org/" target="_blank" style="background-image:url(/images/forums.png);">Forums</a><?
-					?><a class="menubutton" href="http://youtube.com/dopelives" target="_blank" style="background-image:url(/images/utubs.png);">YouTube</a><?
+					?><a class="menubutton" href="https://dopefish.freeforums.org/" target="_blank" style="background-image:url(/images/forums.png);">Forums</a><?
+					?><a class="menubutton" href="https://youtube.com/dopelives" target="_blank" style="background-image:url(/images/utubs.png);">YouTube</a><?
 					?><a class="menubutton" href="https://vacker.tv/donate" target="_blank" style="background-image:url(/images/donate.png);">Donate</a>
 				</div>
 			</div>
@@ -89,7 +89,7 @@ $hls = isset($_GET['hls']);
 				<div id="flash"></div>
 			</div>
 			<div id="chat"<?= ($chatHidden ? ' class="hidden" style="width:0px; background-color:rgba(61, 167, 60, 0);"' : ' style="width:' . $chatSize . 'px;"') ?>>
-				<iframe src="http://webchat.quakenet.org/?channels=dopefish_lives&amp;uio=<?= ($spooks ? 'MTE9MA4c' : 'MTE9MTAz8d') ?>" class="fullContentHeight"></iframe>
+				<iframe src="https://webchat.quakenet.org/?channels=dopefish_lives&amp;uio=<?= ($spooks ? 'MTE9MA4c' : 'MTE9MTAz8d') ?>" class="fullContentHeight"></iframe>
 				<a id="expand" href="javascript:;" onclick="expandStream();"></a>
 			</div>
 		</div>
