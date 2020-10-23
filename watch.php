@@ -1,4 +1,4 @@
-﻿<?
+<?
 $hls = isset($_GET['hls']);
 ?><!DOCTYPE html>
 <html>
@@ -11,11 +11,11 @@ $hls = isset($_GET['hls']);
 		<link rel="stylesheet" type="text/css" href="style/font.css" />
 		<link rel="stylesheet" type="text/css" href="style/watch.css" />
 
-		<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		
 		<? if ($hls) { ?>
-			<script src="http://content.jwplatform.com/libraries/i2wbg4Bq.js"></script>
+			<script src="https://content.jwplatform.com/libraries/i2wbg4Bq.js"></script>
 		<? } else { ?>
 			<script src="script/jwplayer-7.12.13.js"></script>
 		<? } ?>
