@@ -25,7 +25,8 @@ function initPlayer(onReady, sources) {
         sources: sources,
         width: "100%",
         height: "100%",
-        stretching: "uniform"
+        stretching: "uniform",
+        liveTimeout: 0
     })
     .on("ready", function() {
         // Handle the stream info
