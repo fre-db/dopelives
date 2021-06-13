@@ -8,9 +8,9 @@ if (isset($_COOKIE['chatsize'])) {
 }
 
 $vackerPromo = false;
-$spooks = (date('m') == 10);
+$spooks = (date('m') == 10 && date('d') == 31);
 
-$hls = isset($_GET['hls']);
+$hls = !($_GET['hls'] == 'false' || isset($_GET['flash']));
 ?><!DOCTYPE html>
 <html>
 

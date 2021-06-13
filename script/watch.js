@@ -1,6 +1,8 @@
 ﻿
 var hdCookie = "hd";
 var enableHdToggle = false;
+var enableAutoplay = false;
+var enableLowQuality = false;
 
 var player;
 var infoPane;
@@ -21,7 +23,7 @@ function initPlayer(onReady, sources) {
     // Prepare JW player
     player = jwplayer("flash");
     player.setup({
-        file: getStreamUrl("de", "autoplay"),
+        file: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")),
         sources: sources,
         width: "100%",
         height: "100%",
@@ -37,7 +39,7 @@ function initPlayer(onReady, sources) {
         // Handle the HD button
         if (enableHdToggle) {
             $(".jw-icon-hd").remove();
-            controlBar.prepend('<div class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-hd' + (currentChannel == "autoplay" ? " jw-hidden" : "") + '">\
+            controlBar.prepend('<div class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-hd' + (!isLive ? " jw-hidden" : "") + '">\
                 <div id="hd-led" class="fa fa-circle"></div>\
             </div>');
             hdButton = $(".jw-icon-hd");
@@ -115,15 +117,17 @@ function disableHd() {
 
 
 var currentChannel = "";
+var isLive = false;
 var autoplayInfo;
 var liveInfo;
-var servers = ["de", "nl", "us"];
+var defaultServer = "uk";
+var servers = ["uk", "de", "nl", "us"];
 var targetServer = 0;
 function autoswitch() {
     var currentServer = servers[targetServer];
     $.ajax({
         type: "GET",
-        url: "https://" + currentServer + ".vacker.tv/json.php",
+        url: "https://" + (currentServer != "uk" ? currentServer : "de") + ".vacker.tv/json.php",
         dataType: "json",
         success: function(data) {
             targetServer = 0;
@@ -133,32 +137,49 @@ function autoswitch() {
             var width;
             var height;
             
-            if (data.live.live) {
-                channel = (hd ? "live" : "live_low");
-                server = (currentServer == "de" ? (data.live.viewers > 35 ? "nl" : "de") : currentServer);
+            isLive = data.live.live;
+            if (isLive || !enableAutoplay) {
+                channel = (hd || !enableLowQuality ? "live" : "live_low");
+                server = currentServer;
                 if (hdButton && hdButton.hasClass("jw-hidden")) {
                     hdButton.removeClass("jw-hidden");
                 }
                 
-                $.getJSON("https://goalitium.kapsi.fi/dopelives_status3?callback=?", function(data) {
-                    var info = data.split("\n");
-                    if (info.length == 2) {
-                        var gameInfo = info[1].split(": ");
-                        liveInfo = "[" + info[0] + "] " + gameInfo[1];
-                        updateInfoPane();
-                    }
-                });
+                if (isLive) {
+                    $.ajax({
+                        type: "GET",
+                        url: "https://goalitium.kapsi.fi/dopelives_status3?callback=?",
+                        dataType: "jsonp",
+                        crossDomain: true,
+                        success: function(data) {
+                            var info = data.split("\n");
+                            if (info.length == 2) {
+                                var gameInfo = info[1].split(": ");
+                                liveInfo = "[" + info[0] + "] " + gameInfo[1];
+                                updateInfoPane();
+                            }
+                        }
+                    });
+                } else {
+                    updateInfoPane();
+                }
                 
             } else {
                 channel = "autoplay";
-                server = "de";
+                server = defaultServer;
                 if (hdButton && !hdButton.hasClass("jw-hidden")) {
                     hdButton.addClass("jw-hidden");
                 }
                 
-                $.getJSON("https://vacker.tv/apname?callback=?", function(data) {
-                    autoplayInfo = data;
-                    updateInfoPane();
+                $.ajax({
+                    type: "GET",
+                    url: "https://vacker.tv/apname?callback=?",
+                    dataType: "jsonp",
+                    crossDomain: true,
+                    success: function(data) {
+                        autoplayInfo = data;
+                        updateInfoPane();
+                    }
                 });
             }
             
@@ -186,6 +207,16 @@ function setStream(server, channel) {
         }
     }
     
+    setStreamSources(sources);
+}
+function setStreamUrl(url) {
+    var sources =  [{
+        file: url
+    }];
+
+    setStreamSources(sources);
+}
+function setStreamSources(sources) {
     if (hls) {
         // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
         initPlayer(jwOnReady, sources);
@@ -203,7 +234,7 @@ function setStream(server, channel) {
 
 function updateInfoPane() {
     if (infoPane) {
-        var info = (currentChannel == "autoplay" ? "NOT LIVE" + (autoplayInfo ? " - Autoplay: " + autoplayInfo : "") : "LIVE" + (liveInfo ? " - " + liveInfo : ""));
+        var info = (currentChannel == "autoplay" || !isLive ? "NOT LIVE" + (autoplayInfo && enableAutoplay ? " - Autoplay: " + autoplayInfo : "") : "LIVE" + (liveInfo ? " - " + liveInfo : ""));
         if (infoPane.html() != info) {
             infoPane.html(info);
         }
@@ -228,7 +259,7 @@ function getCookie(name) {
 
 function getStreamUrl(server, channel) {
     if (hls) {
-        return "https://" + server + ".vacker.tv/hls/" + channel + "/index.m3u8";
+        return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + channel + "/" + (server == "uk" ? "live" : "index") + ".m3u8";
     } else {
         return "rtmp://" + server + ".vacker.tv/" + channel + "/" + channel;
     }
