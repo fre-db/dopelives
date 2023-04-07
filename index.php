@@ -74,10 +74,8 @@ $hls = !($_GET['hls'] == 'false' || isset($_GET['flash']));
 					</div>
 				<? } ?>
 				<div id="menu">
-					<a class="menubutton" href="newfriend.html" target="_blank" style="background-image:url(/images/<?= ($spooks ? 'spooks/' : NULL) ?>newfriend.png);">Hello!</a><?
-					?><a class="menubutton" href="https://vacker.tv/ondemand" target="_blank" style="background-image:url(/images/vacker.png);">OnDemand</a><?
+					<a class="menubutton" href="https://vacker.tv/ondemand" target="_blank" style="background-image:url(/images/vacker.png);">OnDemand</a><?
 					?><a class="menubutton" href="https://discord.gg/R7cazz8" target="_blank" style="background-image:url(/images/discord.png);">Discord</a><?
-					?><a class="menubutton" href="https://www.tapatalk.com/groups/dopefish/" target="_blank" style="background-image:url(/images/forums.png);">Forums</a><?
 					?><a class="menubutton" href="https://youtube.com/dopelives" target="_blank" style="background-image:url(/images/utubs.png);">YouTube</a><?
 					?><a class="menubutton" href="https://vacker.tv/donate" target="_blank" style="background-image:url(/images/donate.png);">Donate</a>
 				</div>
