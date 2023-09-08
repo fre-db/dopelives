@@ -25,6 +25,9 @@ body {
 #flash .jw-slider-time, #flash .jw-text-duration {
 	display:none;
 }
+#flash.jwplayer.jw-state-idle .jw-controlbar, #flash.jwplayer.jw-state-error .jw-controlbar {
+  display: flex !important;
+}
 #flash .jw-controlbar-center-group {
 	max-width:0;
 }

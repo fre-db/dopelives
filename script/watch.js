@@ -13,7 +13,7 @@ var jwOnReady;
 var playing = true;
 var hd;
 
-function initPlayer(onReady, sources) {
+function initPlayer(onReady, sources, showError) {
     playerError = $("#playerError");
     jwOnReady = onReady;
     
@@ -25,6 +25,7 @@ function initPlayer(onReady, sources) {
     player.setup({
         file: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")),
         sources: sources,
+        image: (showError ? "images/nostreams.png" : null),
         width: "100%",
         height: "100%",
         stretching: "uniform",
@@ -34,6 +35,7 @@ function initPlayer(onReady, sources) {
         // Handle the stream info
         var controlBar = $(".jw-controlbar-right-group");
         infoPane = $(".jw-controlbar-center-group, .jw-text-live");
+        infoPane.show();
         updateInfoPane();
         
         // Handle the HD button
@@ -89,6 +91,8 @@ function initPlayer(onReady, sources) {
     .on("error", function(error) {
         if (error.message == "Flash plugin failed to load") {
             displayPlayerError();
+        } else if (error.code = 232011) {
+            initPlayer(jwOnReady, sources, true);
         }
     });
 };
