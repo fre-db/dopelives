@@ -9,8 +9,6 @@ if (isset($_COOKIE['chatsize'])) {
 
 $vackerPromo = false;
 $spooks = (date('m') == 10 && date('d') == 31);
-
-$hls = !($_GET['hls'] == 'false' || isset($_GET['flash']));
 ?><!DOCTYPE html>
 <html>
 
@@ -30,16 +28,9 @@ $hls = !($_GET['hls'] == 'false' || isset($_GET['flash']));
 		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/black-tie/jquery-ui.css" />
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		
-		<? if ($hls) { ?>
-				<script src="https://content.jwplatform.com/libraries/<?= ($spooks ? '0LjSzsNc' : 'i2wbg4Bq') ?>.js"></script>
-		<? } else { ?>
-				<script src="script/jwplayer-7.12.13.js"></script>
-		<? } ?>
-		<script>
-				jwplayer.key="b3eA3XrzNeYTKIscnX3RJQKfYGPDtXzXSoYDVw==";
-				var hls = <?= $hls ? 'true' : 'false' ?>;
-		</script>
+
+		<link href="https://vjs.zencdn.net/8.19.1/video-js.min.css" rel="stylesheet">
+    	<script src="https://vjs.zencdn.net/8.19.1/video.min.js"></script>
 		
 		<script src="script/functions.js"></script>
 		<script src="script/watch.js"></script>
@@ -83,9 +74,8 @@ $hls = !($_GET['hls'] == 'false' || isset($_GET['flash']));
 		</div>
 		<div id="content">
 			<div id="playerError"></div>
-			<div id="video">
-				<div id="flash"></div>
-			</div>
+				<video-js id="video" class="vjs-default-skin vjs-fill" controls>
+				</video-js>
 			<div id="chat"<?= ($chatHidden ? ' class="hidden" style="width:0px; background-color:rgba(61, 167, 60, 0);"' : ' style="width:' . $chatSize . 'px;"') ?>>
 				<iframe src="https://webchat.quakenet.org/?channels=dopefish_lives&amp;uio=<?= ($spooks ? 'MTE9MA4c' : 'MTE9MTAz8d') ?>" class="fullContentHeight"></iframe>
 				<a id="expand" href="javascript:;" onclick="expandStream();"></a>

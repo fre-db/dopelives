@@ -1,6 +1,4 @@
-<?
-$hls = isset($_GET['hls']);
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 	<head>
@@ -14,15 +12,8 @@ $hls = isset($_GET['hls']);
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		
-		<? if ($hls) { ?>
-			<script src="https://content.jwplatform.com/libraries/i2wbg4Bq.js"></script>
-		<? } else { ?>
-			<script src="script/jwplayer-7.12.13.js"></script>
-		<? } ?>
-		<script>
-			jwplayer.key="b3eA3XrzNeYTKIscnX3RJQKfYGPDtXzXSoYDVw==";
-			var hls = <?= $hls ? 'true' : 'false' ?>;
-		</script>
+		<link href="https://vjs.zencdn.net/8.19.1/video-js.min.css" rel="stylesheet">
+		<script src="https://vjs.zencdn.net/8.19.1/video.min.js"></script>
 		
 		<script src="script/functions.js"></script>
 		<script src="script/watch.js"></script>
@@ -35,6 +26,7 @@ $hls = isset($_GET['hls']);
 	</head>
 
 	<body>
-		<div id="flash"></div>
+		<video-js id="video" class="vjs-default-skin vjs-fill" controls>
+		</video-js>
 	</body>
 </html>

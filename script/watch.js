@@ -17,106 +17,30 @@ function initPlayer(onReady, sources, showError) {
     playerError = $("#playerError");
     jwOnReady = onReady;
     
-    var hdCookieSetting = getCookie(hdCookie);
-    hd = (hdCookieSetting ? hdCookieSetting == "on" : true);
+    // Prepare Video.js player
+    player = videojs('video');
+    player.ready(onReady);
 
-    // Prepare JW player
-    player = jwplayer("flash");
-    player.setup({
-        file: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")),
-        sources: sources,
-        image: (showError ? "images/nostreams.png" : null),
-        width: "100%",
-        height: "100%",
-        stretching: "uniform",
-        liveTimeout: 0
-    })
-    .on("ready", function() {
-        // Handle the stream info
-        var controlBar = $(".jw-controlbar-right-group");
-        infoPane = $(".jw-controlbar-center-group, .jw-text-live");
-        infoPane.show();
-        updateInfoPane();
-        
-        // Handle the HD button
-        if (enableHdToggle) {
-            $(".jw-icon-hd").remove();
-            controlBar.prepend('<div class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-hd' + (!isLive ? " jw-hidden" : "") + '">\
-                <div id="hd-led" class="fa fa-circle"></div>\
-            </div>');
-            hdButton = $(".jw-icon-hd");
-            if (!hd) {
-                hdButton.addClass("jw-off");
-            }
-            hdButton.mouseenter(function() {
-                hdButton.addClass("jw-open");
-            });
-            hdButton.mouseleave(function() {
-                hdButton.removeClass("jw-open");
-            });
-            hdButton.click(function() {
-                if (hdButton.hasClass("jw-off")) {
-                    enableHd();
-                } else {
-                    disableHd();
-                }
-            });
-        }
-        
-        if (onReady) {
-            onReady();
-        }
-    
-        // Start the player
-        autoswitch();
-        autoswitchInterval = setInterval(function() {
-            autoswitch();
-        }, 5000);
-    })
-    .on("play", function() {
-        playerError.hide();
-        playing = true;
-    })
-    .on("pause", function() {
-        playing = false;
-    })
-    .on("complete", function() {
-        autoswitch();
-    })
-    .on("setupError", function(error) {
-        if (error.message == "Error loading player: No playable sources found") {
-            displayPlayerError();
-        }
-    })
-    .on("error", function(error) {
-        if (error.message == "Flash plugin failed to load") {
-            displayPlayerError();
-        } else if (error.code = 232011) {
-            initPlayer(jwOnReady, sources, true);
-        }
-    });
+    // works, but breaks with code in script.js
+    // //player.controlBar.addChild('button', {}, 0) //adds to beginning of controls
+    // var toggleSizeButton = player.controlBar.addChild('button');
+    // var toggleSizeButtonDom = toggleSizeButton.el();
+    // toggleSizeButtonDom.class = 'toggle-size-button';
+    // toggleSizeButtonDom.innerHTML = 'Chat';
+    // toggleSizeButtonDom.onclick = () => {
+    //     toggleStream();
+    // }
+
+    player.addSourceElement(getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")), "application/x-mpegURL");
 };
 
 function displayPlayerError() {
-    playerError.html('Could not start stream.' + (!hls ? ' Either ensure <a href="https://get.adobe.com/flashplayer/" target="_blank">Flash</a> is enabled or <a href="?hls">go to our HTML5 stream</a>.' : ''));
+    playerError.html('Could not start stream.');
     playerError.show();
     // Need a timeout because JW Player will try to set the error message after the error callback.
     setTimeout(function() {
         $(".jw-title-primary").html('');
     }, 1);
-}
-
-function enableHd() {
-    hdButton.removeClass("jw-off");
-    hd = true;
-    autoswitch();
-    setCookie(hdCookie, "on");
-}
-function disableHd() {
-    hdButton.addClass("jw-off");
-    hd = false;
-    autoswitch();
-    setCookie(hdCookie, "off");
 }
 
 
@@ -221,17 +145,8 @@ function setStreamUrl(url) {
     setStreamSources(sources);
 }
 function setStreamSources(sources) {
-    if (hls) {
-        // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
-        initPlayer(jwOnReady, sources);
-    } else {
-        player.load([{
-            sources: sources
-        }]);
-        if (playing) {
-            player.play();
-        }
-    }
+    // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
+    initPlayer(jwOnReady, sources);
     
     updateInfoPane();
 }
@@ -262,9 +177,5 @@ function getCookie(name) {
 }
 
 function getStreamUrl(server, channel) {
-    if (hls) {
-        return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + channel + "/" + (server == "uk" ? "live" : "index") + ".m3u8";
-    } else {
-        return "rtmp://" + server + ".vacker.tv/" + channel + "/" + channel;
-    }
+    return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + channel + "/" + (server == "uk" ? "live" : "index") + ".m3u8";
 }
