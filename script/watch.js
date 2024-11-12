@@ -30,8 +30,10 @@ function initPlayer(onReady, sources, showError) {
     // toggleSizeButtonDom.onclick = () => {
     //     toggleStream();
     // }
-
-    player.addSourceElement(getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")), "application/x-mpegURL");
+    player.src({
+      type: 'application/x-mpegURL',
+      src: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live"))
+    });
 };
 
 function displayPlayerError() {
