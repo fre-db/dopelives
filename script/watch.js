@@ -17,84 +17,20 @@ function initPlayer(onReady, sources, showError) {
     playerError = $("#playerError");
     jwOnReady = onReady;
     
-    var hdCookieSetting = getCookie(hdCookie);
-    hd = (hdCookieSetting ? hdCookieSetting == "on" : true);
+    // Prepare Video.js player
+    player = videojs('vid1');
 
-    // Prepare JW player
-    player = jwplayer("flash");
-    player.setup({
-        file: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")),
-        sources: sources,
-        image: (showError ? "images/nostreams.png" : null),
-        width: "100%",
-        height: "100%",
-        stretching: "uniform",
-        liveTimeout: 0
-    })
-    .on("ready", function() {
-        // Handle the stream info
-        var controlBar = $(".jw-controlbar-right-group");
-        infoPane = $(".jw-controlbar-center-group, .jw-text-live");
-        infoPane.show();
-        updateInfoPane();
-        
-        // Handle the HD button
-        if (enableHdToggle) {
-            $(".jw-icon-hd").remove();
-            controlBar.prepend('<div class="jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-hd' + (!isLive ? " jw-hidden" : "") + '">\
-                <div id="hd-led" class="fa fa-circle"></div>\
-            </div>');
-            hdButton = $(".jw-icon-hd");
-            if (!hd) {
-                hdButton.addClass("jw-off");
-            }
-            hdButton.mouseenter(function() {
-                hdButton.addClass("jw-open");
-            });
-            hdButton.mouseleave(function() {
-                hdButton.removeClass("jw-open");
-            });
-            hdButton.click(function() {
-                if (hdButton.hasClass("jw-off")) {
-                    enableHd();
-                } else {
-                    disableHd();
-                }
-            });
-        }
-        
-        if (onReady) {
-            onReady();
-        }
-    
-        // Start the player
-        autoswitch();
-        autoswitchInterval = setInterval(function() {
-            autoswitch();
-        }, 5000);
-    })
-    .on("play", function() {
-        playerError.hide();
-        playing = true;
-    })
-    .on("pause", function() {
-        playing = false;
-    })
-    .on("complete", function() {
-        autoswitch();
-    })
-    .on("setupError", function(error) {
-        if (error.message == "Error loading player: No playable sources found") {
-            displayPlayerError();
-        }
-    })
-    .on("error", function(error) {
-        if (error.message == "Flash plugin failed to load") {
-            displayPlayerError();
-        } else if (error.code = 232011) {
-            initPlayer(jwOnReady, sources, true);
-        }
-    });
+    // works, but breaks with code in script.js
+    // //player.controlBar.addChild('button', {}, 0) //adds to beginning of controls
+    // var toggleSizeButton = player.controlBar.addChild('button');
+    // var toggleSizeButtonDom = toggleSizeButton.el();
+    // toggleSizeButtonDom.class = 'toggle-size-button';
+    // toggleSizeButtonDom.innerHTML = 'Chat';
+    // toggleSizeButtonDom.onclick = () => {
+    //     toggleStream();
+    // }
+
+    player.addSourceElement(getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live")), "application/x-mpegURL");
 };
 
 function displayPlayerError() {
@@ -104,19 +40,6 @@ function displayPlayerError() {
     setTimeout(function() {
         $(".jw-title-primary").html('');
     }, 1);
-}
-
-function enableHd() {
-    hdButton.removeClass("jw-off");
-    hd = true;
-    autoswitch();
-    setCookie(hdCookie, "on");
-}
-function disableHd() {
-    hdButton.addClass("jw-off");
-    hd = false;
-    autoswitch();
-    setCookie(hdCookie, "off");
 }
 
 

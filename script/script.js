@@ -16,6 +16,7 @@ var expandButton;
 
 var resizing;
 var prevWidth;
+var expandedToggle = false;
 
 var mainRgb = "61, 167, 60";
 
@@ -104,19 +105,10 @@ $(function() {
             window.open('watch.php' + (hls ? '?hls' : ''),'popout','width=1280,height=720,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=1');
         });
         
+        // doesn't work with new button
         // Handle the expand/shrink button
-        controlBar.append('<div class="jw-icon jw-icon-inline jw-button-color jw-reset fa fa-expand"></div>');
-        expandButton = $(".fa-expand");
-        if (chatSize == 0) {
-            expandButton.addClass("jw-off");
-        }
-        expandButton.click(function() {
-            if (expandButton.hasClass("jw-off")) {
-                shrinkStream();
-            } else {
-                expandStream();
-            }
-        });
+        //controlBar.append('<div class="jw-icon jw-icon-inline jw-button-color jw-reset fa fa-expand"></div>');
+        expandButton = $(".toggle-size-button");
         
         resizeWindow();
     });
@@ -179,6 +171,16 @@ function shrinkStream() {
     });
     
     setCookie(chatSizeCookie, originalChatWidth);
+}
+
+function toggleStream() {
+    if(expandedToggle) {
+        shrinkStream()
+        expandedToggle = false
+    } else {
+        expandStream()
+        expandedToggle = true
+    }
 }
 
 function resizeWindow(manual) {
