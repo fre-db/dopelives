@@ -18,7 +18,8 @@ function initPlayer(onReady, sources, showError) {
     jwOnReady = onReady;
     
     // Prepare Video.js player
-    player = videojs('vid1');
+    player = videojs('video');
+    player.ready(onReady);
 
     // works, but breaks with code in script.js
     // //player.controlBar.addChild('button', {}, 0) //adds to beginning of controls
@@ -34,7 +35,7 @@ function initPlayer(onReady, sources, showError) {
 };
 
 function displayPlayerError() {
-    playerError.html('Could not start stream.' + (!hls ? ' Either ensure <a href="https://get.adobe.com/flashplayer/" target="_blank">Flash</a> is enabled or <a href="?hls">go to our HTML5 stream</a>.' : ''));
+    playerError.html('Could not start stream.');
     playerError.show();
     // Need a timeout because JW Player will try to set the error message after the error callback.
     setTimeout(function() {
@@ -144,17 +145,8 @@ function setStreamUrl(url) {
     setStreamSources(sources);
 }
 function setStreamSources(sources) {
-    if (hls) {
-        // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
-        initPlayer(jwOnReady, sources);
-    } else {
-        player.load([{
-            sources: sources
-        }]);
-        if (playing) {
-            player.play();
-        }
-    }
+    // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
+    initPlayer(jwOnReady, sources);
     
     updateInfoPane();
 }
@@ -185,9 +177,5 @@ function getCookie(name) {
 }
 
 function getStreamUrl(server, channel) {
-    if (hls) {
-        return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + channel + "/" + (server == "uk" ? "live" : "index") + ".m3u8";
-    } else {
-        return "rtmp://" + server + ".vacker.tv/" + channel + "/" + channel;
-    }
+    return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + channel + "/" + (server == "uk" ? "live" : "index") + ".m3u8";
 }

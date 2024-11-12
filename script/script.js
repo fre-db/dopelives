@@ -102,7 +102,7 @@ $(function() {
         controlBar.children(".jw-icon-fullscreen").before('<div class="jw-icon jw-icon-inline jw-button-color jw-reset fa fa-external-link"></div>');
         $(".fa-external-link").click(function() {
             player.pause();
-            window.open('watch.php' + (hls ? '?hls' : ''),'popout','width=1280,height=720,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=1');
+            window.open('watch.php','popout','width=1280,height=720,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=1');
         });
         
         // doesn't work with new button

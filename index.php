@@ -74,10 +74,8 @@ $spooks = (date('m') == 10 && date('d') == 31);
 		</div>
 		<div id="content">
 			<div id="playerError"></div>
-			<div id="video">
-				<video-js id=vid1 class="vjs-default-skin vjs-fluid" controls>
+				<video-js id="video" class="vjs-default-skin vjs-fill" controls>
 				</video-js>
-			</div>
 			<div id="chat"<?= ($chatHidden ? ' class="hidden" style="width:0px; background-color:rgba(61, 167, 60, 0);"' : ' style="width:' . $chatSize . 'px;"') ?>>
 				<iframe src="https://webchat.quakenet.org/?channels=dopefish_lives&amp;uio=<?= ($spooks ? 'MTE9MA4c' : 'MTE9MTAz8d') ?>" class="fullContentHeight"></iframe>
 				<a id="expand" href="javascript:;" onclick="expandStream();"></a>
