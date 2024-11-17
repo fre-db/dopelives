@@ -4,6 +4,7 @@ var playerError;
 var jwOnReady;
 
 var playing = true;
+var playOnLoad = false;
 
 function initPlayer(onReady, sources, showError) {
     playerError = $("#playerError");
@@ -14,6 +15,11 @@ function initPlayer(onReady, sources, showError) {
     if (onReady) {
         player.on('ready', onReady);
     }
+    player.on("loadstart", function(){
+        if (playOnLoad) {
+            player.play();
+        }
+    });
     player.on('error', function(e) {
         var error = player.error();
         if (error.code == 4) {
@@ -33,7 +39,9 @@ function initPlayer(onReady, sources, showError) {
     $('.vjs-play-control').on('click', function(e) {
         if ($('#video').hasClass('vjs-error')) {
             playerError.hide();
-            player.play();
+            
+            playOnLoad = true;
+            player.load();
         }
     });
 };
