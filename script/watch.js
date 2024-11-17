@@ -1,6 +1,4 @@
-﻿var enableAutoplay = false;
-
-var player;
+﻿var player;
 var infoPane;
 var playerError;
 var jwOnReady;
@@ -35,7 +33,7 @@ function initPlayer(onReady, sources, showError) {
     // }
     player.src({
       type: 'application/x-mpegURL',
-      src: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live"))
+      src: getStreamUrl(defaultServer, "live")
     });
     
     // Allow play button to retry stream.
@@ -60,9 +58,7 @@ function displayPlayerError(message) {
 }
 
 
-var currentChannel = "";
 var isLive = false;
-var autoplayInfo;
 var liveInfo;
 var defaultServer = "uk";
 var servers = ["uk", "de", "nl", "us"];
@@ -76,71 +72,48 @@ function autoswitch() {
         success: function(data) {
             targetServer = 0;
             
-            var channel;
             var server;
             var width;
             var height;
             
             isLive = data.live.live;
-            if (isLive || !enableAutoplay) {
-                channel = "live";
-                server = currentServer;
-                
-                if (isLive) {
-                    $.ajax({
-                        type: "GET",
-                        url: "https://goalitium.kapsi.fi/dopelives_status3?callback=?",
-                        dataType: "jsonp",
-                        crossDomain: true,
-                        success: function(data) {
-                            var info = data.split("\n");
-                            if (info.length == 2) {
-                                var gameInfo = info[1].split(": ");
-                                liveInfo = "[" + info[0] + "] " + gameInfo[1];
-                                updateInfoPane();
-                            }
-                        }
-                    });
-                } else {
-                    updateInfoPane();
-                }
-                
-            } else {
-                channel = "autoplay";
-                server = defaultServer;
-                
+            server = currentServer;
+            
+            if (isLive) {
                 $.ajax({
                     type: "GET",
-                    url: "https://vacker.tv/apname?callback=?",
+                    url: "https://goalitium.kapsi.fi/dopelives_status3?callback=?",
                     dataType: "jsonp",
                     crossDomain: true,
                     success: function(data) {
-                        autoplayInfo = data;
-                        updateInfoPane();
+                        var info = data.split("\n");
+                        if (info.length == 2) {
+                            var gameInfo = info[1].split(": ");
+                            liveInfo = "[" + info[0] + "] " + gameInfo[1];
+                            updateInfoPane();
+                        }
                     }
                 });
+            } else {
+                updateInfoPane();
             }
             
-            if (channel != currentChannel) {
-                setStream(server, channel);
-            }
+            setStream(server);
         },
         error: function() {
             targetServer = (targetServer + 1) % servers.length;
         }
     });
 }
-function setStream(server, channel) {
-    currentChannel = channel;
-    
+function setStream(server) {
     var sources =  [{ 
-        file: getStreamUrl(server, channel)
+        file: getStreamUrl(server)
     }];
     
     for (var i = 0; i < servers.length; ++i) {
         if (servers[i] != server) {
             sources.push({
-                file: getStreamUrl(servers[i], channel)
+                file: getStreamUrl(servers[i])
             });
         }
     }
@@ -163,7 +136,7 @@ function setStreamSources(sources) {
 
 function updateInfoPane() {
     if (infoPane) {
-        var info = (currentChannel == "autoplay" || !isLive ? "NOT LIVE" + (autoplayInfo && enableAutoplay ? " - Autoplay: " + autoplayInfo : "") : "LIVE" + (liveInfo ? " - " + liveInfo : ""));
+        var info = (!isLive ? "NOT LIVE" : "LIVE" + (liveInfo ? " - " + liveInfo : ""));
         if (infoPane.html() != info) {
             infoPane.html(info);
         }
@@ -186,6 +159,6 @@ function getCookie(name) {
     return "";
 }
 
-function getStreamUrl(server, channel) {
-    return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + channel + "/" + (server == "uk" ? "live" : "index") + ".m3u8";
+function getStreamUrl(server) {
+    return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + "live/" + (server == "uk" ? "live" : "index") + ".m3u8";
 }
