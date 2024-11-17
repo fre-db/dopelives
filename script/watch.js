@@ -40,6 +40,13 @@ function initPlayer(onReady, sources, showError) {
       type: 'application/x-mpegURL',
       src: getStreamUrl(defaultServer, (enableAutoplay ? "autoplay" : "live"))
     });
+    
+    // Allow play button to retry stream.
+    $('.vjs-play-control').on('click', function(e) {
+        if ($('#video').hasClass('vjs-error')) {
+            player.load();
+        }
+    });
 };
 
 function displayNotLiveError() {
@@ -49,6 +56,9 @@ function displayPlayerError(message) {
     playerError.html(message);
     playerError.show();
     $('.vjs-error-display').hide();
+    
+    $('.vjs-control-bar').show();
+    $('.vjs-controls-disabled').removeClass('vjs-controls-disabled');
 }
 
 
