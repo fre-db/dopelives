@@ -26,6 +26,9 @@ function initPlayer(onReady, sources, showError) {
             displayNotLiveError();
         }
     });
+    player.on("play", function(){
+        playerError.hide();
+    });
 
     // works, but breaks with code in script.js
     // //player.controlBar.addChild('button', {}, 0) //adds to beginning of controls
@@ -44,6 +47,7 @@ function initPlayer(onReady, sources, showError) {
     // Allow play button to retry stream.
     $('.vjs-play-control').on('click', function(e) {
         if ($('#video').hasClass('vjs-error')) {
+            playerError.hide();
             player.load();
         }
     });

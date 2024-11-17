@@ -18,6 +18,7 @@ body {
 	border-bottom:4px solid #3da73c;
 	overflow:hidden;
 	position:relative;
+    flex:1 0 auto;
 }
 #header.hidden {
 	border-bottom:none;
@@ -114,6 +115,7 @@ body {
 	table-layout: fixed;
 	position:relative;
 	flex: 1 1 auto;
+    overflow: hidden;
 }
 
 #playerError {
