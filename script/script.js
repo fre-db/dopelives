@@ -13,6 +13,7 @@ var fadeElements;
 var originalChatWidth = 500;
 
 var expandButton;
+var expandButtonCollapsedClass = 'vjs-expand-collapsed';
 
 var resizing;
 var prevWidth;
@@ -63,7 +64,7 @@ $(function() {
         start: function(event, ui) {
             resizing = true;
             if (prevWidth < 150) {
-                expandButton.removeClass("jw-off");
+                expandButton.removeClass(expandButtonCollapsedClass);
                 header.removeClass("hidden");
                 chat.removeClass("hidden");
             }
@@ -91,24 +92,28 @@ $(function() {
     });
     
     initPlayer(function() {
-        var controlBar = $(".jw-button-container, .jw-controlbar-right-group");
-        
-        // Handle the JW Player size
-        var jwAspect = $(".jw-aspect");
-        jwAspect.css("paddingTop", "");
-        fullContentHeights = $(".fullContentHeight").add(jwAspect);
+        var controlBar = $(".vjs-control-bar");
         
         // Handle the expand/shrink button
-        controlBar.children(".jw-icon-fullscreen").before('<div class="jw-icon jw-icon-inline jw-button-color jw-reset fa fa-external-link"></div>');
+        controlBar.children(".vjs-fullscreen-control").before('<button class="vjs-popout vjs-control vjs-button" type="button" title="Popout"><span class="vjs-icon-placeholder fa fa-external-link"></span><span class="vjs-control-text" aria-live="polite">Popout</span></button>');
         $(".fa-external-link").click(function() {
             player.pause();
             window.open('watch.php','popout','width=1280,height=720,location=0,menubar=0,scrollbars=0,status=0,toolbar=0,resizable=1');
         });
         
-        // doesn't work with new button
         // Handle the expand/shrink button
-        //controlBar.append('<div class="jw-icon jw-icon-inline jw-button-color jw-reset fa fa-expand"></div>');
-        expandButton = $(".toggle-size-button");
+        controlBar.append('<button class="vjs-expand vjs-control vjs-button" type="button" title="Toggle chat"><span class="vjs-icon-placeholder fa fa-expand"></span><span class="vjs-control-text" aria-live="polite">Toggle chat</span></button>');
+        expandButton = $(".vjs-expand");
+        if (chatSize == 0) {
+            expandButton.addClass(expandButtonCollapsedClass);
+        }
+        expandButton.click(function() {
+            if (expandButton.hasClass(expandButtonCollapsedClass)) {
+                shrinkStream();
+            } else {
+                expandStream();
+            }
+        });
         
         resizeWindow();
     });
@@ -132,7 +137,7 @@ $(function() {
     });
 });
 function expandStream() {
-    if (expandButton) expandButton.addClass("jw-off");
+    if (expandButton) expandButton.addClass(expandButtonCollapsedClass);
     
     prevWidth = 0;
     header.animate({ height: 0, opacity: 0 });
@@ -152,7 +157,7 @@ function expandStream() {
     setCookie(chatSizeCookie, 0);
 }
 function shrinkStream() {
-    if (expandButton) expandButton.removeClass("jw-off");
+    if (expandButton) expandButton.removeClass(expandButtonCollapsedClass);
     prevWidth = originalChatWidth;
     
     header.removeClass("hidden");
