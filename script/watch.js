@@ -11,7 +11,9 @@ function initPlayer(onReady, sources, showError) {
     
     // Prepare Video.js player
     player = videojs('video');
-    player.ready(onReady);
+    if (onReady) {
+        player.on('ready', onReady);
+    }
     player.on('error', function(e) {
         var error = player.error();
         if (error.code == 4) {
@@ -22,15 +24,6 @@ function initPlayer(onReady, sources, showError) {
         playerError.hide();
     });
 
-    // works, but breaks with code in script.js
-    // //player.controlBar.addChild('button', {}, 0) //adds to beginning of controls
-    // var toggleSizeButton = player.controlBar.addChild('button');
-    // var toggleSizeButtonDom = toggleSizeButton.el();
-    // toggleSizeButtonDom.class = 'toggle-size-button';
-    // toggleSizeButtonDom.innerHTML = 'Chat';
-    // toggleSizeButtonDom.onclick = () => {
-    //     toggleStream();
-    // }
     player.src({
       type: 'application/x-mpegURL',
       src: getStreamUrl()
@@ -63,8 +56,7 @@ var liveInfo;
 function autoswitch() {
     $.ajax({
         type: "GET",
-        // Use DE instead of UK to check status since UK doesn't report it.
-        url: "https://de.vacker.tv/json.php",
+        url: "https://vacker.tv/json.php",
         dataType: "json",
         success: function(data) {
             isLive = data.live.live;

@@ -134,12 +134,6 @@ body {
     background-color:#000;
     line-height:0;
 }
-#flash.jwplayer {
-    height:auto !important;
-}
-#flash.jwplayer .jw-aspect {
-    display:block;
-}
 
 
 #chat {
