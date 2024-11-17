@@ -1,17 +1,11 @@
-﻿
-var hdCookie = "hd";
-var enableHdToggle = false;
-var enableAutoplay = false;
-var enableLowQuality = false;
+﻿var enableAutoplay = false;
 
 var player;
 var infoPane;
-var hdButton;
 var playerError;
 var jwOnReady;
 
 var playing = true;
-var hd;
 
 function initPlayer(onReady, sources, showError) {
     playerError = $("#playerError");
@@ -89,11 +83,8 @@ function autoswitch() {
             
             isLive = data.live.live;
             if (isLive || !enableAutoplay) {
-                channel = (hd || !enableLowQuality ? "live" : "live_low");
+                channel = "live";
                 server = currentServer;
-                if (hdButton && hdButton.hasClass("jw-hidden")) {
-                    hdButton.removeClass("jw-hidden");
-                }
                 
                 if (isLive) {
                     $.ajax({
@@ -117,9 +108,6 @@ function autoswitch() {
             } else {
                 channel = "autoplay";
                 server = defaultServer;
-                if (hdButton && !hdButton.hasClass("jw-hidden")) {
-                    hdButton.addClass("jw-hidden");
-                }
                 
                 $.ajax({
                     type: "GET",

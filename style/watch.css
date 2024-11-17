@@ -43,24 +43,6 @@ body {
 .jw-skin-seven .jw-controlbar-right-group .jw-icon-tooltip::before, .jw-skin-seven .jw-controlbar-right-group .jw-icon-inline::before {
 	border-left:none !important;
 }
-#flash .jw-icon-hd.jw-off {
-    color:#555;
-}
-#hd-led {
-	color:#3da73c;
-	font-size:9px;
-	line-height:40px;
-	position:absolute;
-	top:0px;
-	left:-6px;
-	
-	color:#3da73c;
-	text-shadow:0px 0px 7px #3da73c;
-}
-.jw-off #hd-led {
-	color:#444;
-	text-shadow:none;
-}
 .fa {
 	font-family:FontAwesome !important;
 }
