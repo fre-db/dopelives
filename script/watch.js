@@ -20,6 +20,12 @@ function initPlayer(onReady, sources, showError) {
     // Prepare Video.js player
     player = videojs('video');
     player.ready(onReady);
+    player.on('error', function(e) {
+        var error = player.error();
+        if (error.code == 4) {
+            displayNotLiveError();
+        }
+    });
 
     // works, but breaks with code in script.js
     // //player.controlBar.addChild('button', {}, 0) //adds to beginning of controls
@@ -36,13 +42,13 @@ function initPlayer(onReady, sources, showError) {
     });
 };
 
-function displayPlayerError() {
-    playerError.html('Could not start stream.');
+function displayNotLiveError() {
+    displayPlayerError('No one is currently streaming.');
+}
+function displayPlayerError(message) {
+    playerError.html(message);
     playerError.show();
-    // Need a timeout because JW Player will try to set the error message after the error callback.
-    setTimeout(function() {
-        $(".jw-title-primary").html('');
-    }, 1);
+    $('.vjs-error-display').hide();
 }
 
 
