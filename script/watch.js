@@ -33,7 +33,7 @@ function initPlayer(onReady, sources, showError) {
     // }
     player.src({
       type: 'application/x-mpegURL',
-      src: getStreamUrl(defaultServer, "live")
+      src: getStreamUrl()
     });
     
     // Allow play button to retry stream.
@@ -60,24 +60,14 @@ function displayPlayerError(message) {
 
 var isLive = false;
 var liveInfo;
-var defaultServer = "uk";
-var servers = ["uk", "de", "nl", "us"];
-var targetServer = 0;
 function autoswitch() {
-    var currentServer = servers[targetServer];
     $.ajax({
         type: "GET",
-        url: "https://" + (currentServer != "uk" ? currentServer : "de") + ".vacker.tv/json.php",
+        // Use DE instead of UK to check status since UK doesn't report it.
+        url: "https://de.vacker.tv/json.php",
         dataType: "json",
         success: function(data) {
-            targetServer = 0;
-            
-            var server;
-            var width;
-            var height;
-            
             isLive = data.live.live;
-            server = currentServer;
             
             if (isLive) {
                 $.ajax({
@@ -98,40 +88,9 @@ function autoswitch() {
                 updateInfoPane();
             }
             
-            setStream(server);
-        },
-        error: function() {
-            targetServer = (targetServer + 1) % servers.length;
+            setStream();
         }
     });
-}
-function setStream(server) {
-    var sources =  [{ 
-        file: getStreamUrl(server)
-    }];
-    
-    for (var i = 0; i < servers.length; ++i) {
-        if (servers[i] != server) {
-            sources.push({
-                file: getStreamUrl(servers[i])
-            });
-        }
-    }
-    
-    setStreamSources(sources);
-}
-function setStreamUrl(url) {
-    var sources =  [{
-        file: url
-    }];
-
-    setStreamSources(sources);
-}
-function setStreamSources(sources) {
-    // Can't just load new sources in newer JW Player versions because they went full cash-grab mode
-    initPlayer(jwOnReady, sources);
-    
-    updateInfoPane();
 }
 
 function updateInfoPane() {
@@ -159,6 +118,6 @@ function getCookie(name) {
     return "";
 }
 
-function getStreamUrl(server) {
-    return "https://" + server + ".vacker.tv/" + (server != "uk" ? "hls/" : "") + "live/" + (server == "uk" ? "live" : "index") + ".m3u8";
+function getStreamUrl() {
+    return "https://uk.vacker.tv/live/live.m3u8";
 }
