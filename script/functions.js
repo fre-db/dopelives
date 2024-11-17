@@ -11,8 +11,8 @@ function getCookie(name) {
     for(var i = 0; i < cookies.length; ++i) {
         var cookie = cookies[i].replace(/^ +/, "");
         if (cookie.indexOf(name) == 0) {
-			return cookie.substring(name.length);
-		}
+            return cookie.substring(name.length);
+        }
     }
     return "";
 }

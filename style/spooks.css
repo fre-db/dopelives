@@ -2,23 +2,23 @@
 /* layout.css */
 
 #header {
-	border-bottom-color:#c00;
+    border-bottom-color:#c00;
 }
 
 #logo {
-	background-image:url(/images/spooks/logo.png);
+    background-image:url(/images/spooks/logo.png);
 }
 
 #title_name {
-	color:#fff;
+    color:#fff;
 }
 #title_slogan {
-	color:#c00;
-	margin-top:5px;
+    color:#c00;
+    margin-top:5px;
 }
 
 #chat {
-	background-color:#c00;
+    background-color:#c00;
 }
 
 
@@ -36,52 +36,52 @@ body,
 #flash .jw-controlbar-center-group,
 #flash .jw-text-elapsed,
 #flash .jw-text-live {
-	font-family:Spook,Century Gothic,CenturyGothic,AppleGothic,CG,sans-serif;
+    font-family:Spook,Century Gothic,CenturyGothic,AppleGothic,CG,sans-serif;
 }
 
 #menu a {
-	filter:brightness(0) invert(1);
-	-webkit-filter:brightness(0) invert(1);
+    filter:brightness(0) invert(1);
+    -webkit-filter:brightness(0) invert(1);
 }
 #menu a:hover, a.active, a:active {
-	filter:sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(80%);
-	-webkit-filter:sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(75%);
+    filter:sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(80%);
+    -webkit-filter:sepia(100%) saturate(10000%) hue-rotate(0deg) brightness(75%);
 }
 
 a {
-	color: #c00;
+    color: #c00;
 }
 
 h1, h2, h3 {
-	color:#fff;
+    color:#fff;
 }
 
 
 /* custom */
 
 #spoopyskeletons {
-	width:25%;
-	background-position:0 8px;
-	display:table-cell;
-	
-	-webkit-user-select: none;  
-	-moz-user-select: none;    
-	-ms-user-select: none;      
-	user-select: none;
+    width:25%;
+    background-position:0 8px;
+    display:table-cell;
+    
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
 }
 #spoopyskeletons img {
-	margin-top:8px;
+    margin-top:8px;
 }
 
 .pumpkin {
-	width:0;
-	height:0;
-	background-image:url(/images/spooks/pumpkin.png);
-	background-size: 100% 100%;
-	pointer-events:none;
-	position:absolute;
-	z-index:1000;
-	opacity:0.6;
+    width:0;
+    height:0;
+    background-image:url(/images/spooks/pumpkin.png);
+    background-size: 100% 100%;
+    pointer-events:none;
+    position:absolute;
+    z-index:1000;
+    opacity:0.6;
 }
 
 
