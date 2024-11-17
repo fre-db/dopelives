@@ -33,7 +33,7 @@ function initPlayer(onReady, sources, showError) {
     $('.vjs-play-control').on('click', function(e) {
         if ($('#video').hasClass('vjs-error')) {
             playerError.hide();
-            player.load();
+            player.play();
         }
     });
 };
