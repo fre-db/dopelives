@@ -90,6 +90,10 @@ body {
 }
 
 
+/* Keep UI available when not live. */
+#video.vjs-error .vjs-control-bar {
+    display:block !important;
+}
 
 
 
